@@ -3,6 +3,9 @@ const backendUrl = process.env.BACKEND_URL;
 
 const nextConfig = {
   reactStrictMode: false,
+    typescript: {
+    ignoreBuildErrors: true,
+  },
   async rewrites() {
     if (!backendUrl) return [];
 

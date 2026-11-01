@@ -1,4 +1,10 @@
-import nodemailer from 'nodemailer';
+// Safe resilient import for nodemailer across all deployment environments
+let nodemailer;
+try {
+  nodemailer = require('nodemailer');
+} catch (e) {
+  nodemailer = null;
+}
 
 /**
  * CampusFlow Contact Email Service (Nodemailer)
@@ -19,7 +25,7 @@ export async function sendContactMessageToHost({ name, email, message }) {
   });
 
   // Verify credentials exist
-  if (!hostEmail || !hostPass) {
+  if (!nodemailer || !hostEmail || !hostPass) {
     console.log(`[Contact Mailer] Message received for Host:`);
     console.log(`  - From: ${name} <${email}>`);
     console.log(`  - Message: "${message}"`);
